@@ -1,150 +1,3 @@
-// package gui;
-
-// import java.awt.BorderLayout;
-// import java.awt.GridLayout;
-// import java.awt.event.ActionEvent;
-// import java.awt.event.ActionListener;
-// import java.util.ArrayList;
-
-// import javax.swing.JButton;
-// import javax.swing.JFrame;
-// import javax.swing.JLabel;
-// import javax.swing.JPanel;
-// import javax.swing.JScrollPane;
-// import javax.swing.JTextArea;
-// import javax.swing.JTextField;
-
-// import manager.StudentManager;
-// import manager.StudentManagerImpl;
-// import model.Student;
-
-// public class StudentManagementGUI {
-//     private JFrame frame;
-//     private JTextField idField, nameField, ageField, gradeField;
-//     private JTextArea outputArea;
-//     private StudentManager manager;
-
-//     public StudentManagementGUI() {
-//         manager = new StudentManagerImpl();
-//         initialize();
-//     }
-
-//     private void initialize() {
-//         frame = new JFrame("Student Management System");
-//         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//         frame.setSize(1000, 700);
-//         frame.setLayout(new BorderLayout());
-
-//         JPanel inputPanel = new JPanel();
-//         inputPanel.setLayout(new GridLayout(4, 2));
-
-//         inputPanel.add(new JLabel("Student ID:"));
-//         idField = new JTextField();
-//         inputPanel.add(idField);
-
-//         inputPanel.add(new JLabel("Name:"));
-//         nameField = new JTextField();
-//         inputPanel.add(nameField);
-
-//         inputPanel.add(new JLabel("Age:"));
-//         ageField = new JTextField();
-//         inputPanel.add(ageField);
-
-//         inputPanel.add(new JLabel("Grade:"));
-//         gradeField = new JTextField();
-//         inputPanel.add(gradeField);
-
-//         JButton addButton = new JButton("Add Student");
-//         addButton.addActionListener(new ActionListener() {
-//             @Override
-//             public void actionPerformed(ActionEvent e) {
-//                 addStudent();
-//             }
-//         });
-//         inputPanel.add(addButton);
-
-//         JButton removeButton = new JButton("Remove Student");
-//         removeButton.addActionListener(new ActionListener() {
-//             @Override
-//             public void actionPerformed(ActionEvent e) {
-//                 removeStudent();
-//             }
-//         });
-//         inputPanel.add(removeButton);
-
-//         JButton displayButton = new JButton("Display All Students");
-//         displayButton.addActionListener(new ActionListener() {
-//             @Override
-//             public void actionPerformed(ActionEvent e) {
-//                 displayAllStudents();
-//             }
-//         });
-//         inputPanel.add(displayButton);
-
-//         JButton averageButton = new JButton("Calculate Average");
-//         averageButton.addActionListener(new ActionListener() {
-//             @Override
-//             public void actionPerformed(ActionEvent e) {
-//                 calculateAverageGrade();
-//             }
-//         });
-//         inputPanel.add(averageButton);
-
-//         frame.add(inputPanel, BorderLayout.NORTH);
-
-//         outputArea = new JTextArea();
-//         outputArea.setEditable(false);
-//         frame.add(new JScrollPane(outputArea), BorderLayout.CENTER);
-
-//         frame.setVisible(true);
-//     }
-
-//     private void addStudent() {
-//         try {
-//             String id = idField.getText();
-//             String name = nameField.getText();
-//             int age = Integer.parseInt(ageField.getText());
-//             double grade = Double.parseDouble(gradeField.getText());
-//             manager.addStudent(new Student(name, age, grade, id));
-//             outputArea.setText("Student added successfully!");
-//         } catch (Exception e) {
-//             outputArea.setText("Error adding student: " + e.getMessage());
-//         }
-//     }
-
-//     private void removeStudent() {
-//         try {
-//             String id = idField.getText();
-//             manager.removeStudent(id);
-//             outputArea.setText("Student removed successfully!");
-//         } catch (Exception e) {
-//             outputArea.setText("Error removing student: " + e.getMessage());
-//         }
-//     }
-
-//     private void displayAllStudents() {
-//         ArrayList<Student> students = manager.displayAllStudents();
-//         StringBuilder sb = new StringBuilder();
-//         for (Student student : students) {
-//             sb.append(student.getStudentID()).append(", ")
-//                 .append(student.getName()).append(", ")
-//                 .append(student.getAge()).append(", ")
-//                 .append(student.getGrade()).append("\n");
-//         }
-//         outputArea.setText(sb.toString());
-//     }
-
-//     private void calculateAverageGrade() {
-//         double average = manager.calculateAverageGrade();
-//         outputArea.setText("Average Grade: " + average);
-//     }
-
-//     public static void main(String[] args) {
-//         new StudentManagementGUI();
-//     }
-// }
-
-
 package gui;
 
 import java.awt.BorderLayout;
@@ -169,30 +22,30 @@ import manager.StudentManagerImpl;
 import model.Student;
 
 public class StudentManagementGUI {
-    private JFrame frame;
-    private JTextField idField, nameField, ageField, gradeField;
-    private JTextArea outputArea;
-    private StudentManager manager;
+    private JFrame frame; // Główne okno aplikacji
+    private JTextField idField, nameField, ageField, gradeField; // Pola wejściowe dla danych studenta
+    private JTextArea outputArea; // Obszar wyjściowy dla komunikatów i listy studentów
+    private StudentManager manager; // Logika biznesowa do zarządzania studentami
 
     public StudentManagementGUI() {
-        manager = new StudentManagerImpl();
-        initialize();
+        manager = new StudentManagerImpl(); // Inicjalizacja menedżera studentów
+        initialize(); // Inicjalizacja GUI
     }
 
     private void initialize() {
         frame = new JFrame("Student Management System");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(720, 440);
-        frame.setLayout(new BorderLayout());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Zamykanie aplikacji po zamknięciu okna
+        frame.setSize(820, 440);
+        frame.setLayout(new BorderLayout()); // Użycie układu BorderLayout
 
-        // Create a parent panel for labels and inputs
+        // Panel wejściowy dla etykiet i pól tekstowych
         JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout(2, 4, 10, 10)); // 2 rows, 4 columns, with gaps
+        inputPanel.setLayout(new GridLayout(2, 4, 10, 10)); // 2 wiersze, 4 kolumny, odstępy między elementami
 
-        // Custom font for labels
+        // Ustawienia dla etykiet
         java.awt.Font labelFont = new java.awt.Font("SansSerif", java.awt.Font.BOLD, 14);
 
-        // Row 1: Labels
+        // Wiersz 1: Etykiety
         JLabel idLabel = new JLabel("Student ID:");
         idLabel.setHorizontalAlignment(SwingConstants.CENTER);
         idLabel.setFont(labelFont);
@@ -213,36 +66,36 @@ public class StudentManagementGUI {
         gradeLabel.setFont(labelFont);
         inputPanel.add(gradeLabel);
 
-        // Row 2: Input fields
-        idField = new JTextField();
+        // Wiersz 2: Pola tekstowe
+        idField = new JTextField(); // Pole tekstowe dla ID studenta
         inputPanel.add(idField);
 
-        nameField = new JTextField();
+        nameField = new JTextField(); // Pole tekstowe dla imienia
         inputPanel.add(nameField);
 
-        ageField = new JTextField();
+        ageField = new JTextField(); // Pole tekstowe dla wieku
         inputPanel.add(ageField);
 
-        gradeField = new JTextField();
+        gradeField = new JTextField(); // Pole tekstowe dla oceny
         inputPanel.add(gradeField);
 
-        // Add the inputPanel to the frame
+        // Dodanie panelu wejściowego do ramki
         frame.add(inputPanel, BorderLayout.NORTH);
 
-        // Create a panel for buttons
+        // Panel przycisków
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10)); // Centered with gaps
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10)); // Wyśrodkowany układ z odstępami
 
-        // Define button dimensions
-        java.awt.Dimension buttonSize = new java.awt.Dimension(150, 30); // Fixed height
+        // Wymiary przycisków
+        java.awt.Dimension buttonSize = new java.awt.Dimension(150, 30);
 
-        // Add buttons to the panel
+        // Dodanie przycisków
         JButton addButton = new JButton("Add Student");
         addButton.setPreferredSize(buttonSize);
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addStudent();
+                addStudent(); // Obsługa przycisku "Add Student"
             }
         });
         buttonPanel.add(addButton);
@@ -252,7 +105,7 @@ public class StudentManagementGUI {
         removeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                removeStudent();
+                removeStudent(); // Obsługa przycisku "Remove Student"
             }
         });
         buttonPanel.add(removeButton);
@@ -262,7 +115,7 @@ public class StudentManagementGUI {
         displayButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                displayAllStudents();
+                displayAllStudents(); // Obsługa przycisku "Display All Students"
             }
         });
         buttonPanel.add(displayButton);
@@ -272,80 +125,102 @@ public class StudentManagementGUI {
         averageButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                calculateAverageGrade();
+                calculateAverageGrade(); // Obsługa przycisku "Calculate Average"
             }
         });
         buttonPanel.add(averageButton);
 
-        // Add the button panel to the frame
+        JButton updateButton = new JButton("Update Student");
+        updateButton.setPreferredSize(buttonSize);
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateStudent(); // Obsługa przycisku "Update Student"
+            }
+        });
+        buttonPanel.add(updateButton);
+
+        // Dodanie panelu przycisków do ramki
         frame.add(buttonPanel, BorderLayout.CENTER);
 
-        // Create text area for output
+        // Tworzenie obszaru tekstowego do wyświetlania danych
         outputArea = new JTextArea();
-        outputArea.setEditable(false);
-        outputArea.setPreferredSize(new Dimension(580, 300)); // Set a fixed height for the output area
-        JScrollPane scrollPane = new JScrollPane(outputArea);
+        outputArea.setEditable(false); // Pole tylko do odczytu
+        outputArea.setPreferredSize(new Dimension(580, 300));
+        JScrollPane scrollPane = new JScrollPane(outputArea); // Dodanie przewijania
 
-        // Add the scrollable output area to the frame
+        // Dodanie obszaru tekstowego do ramki
         frame.add(scrollPane, BorderLayout.SOUTH);
 
-        // Make the frame visible
+        // Ustawienie ramki jako widocznej
         frame.setVisible(true);
     }
     
     private String validateFields() {
+        // Metoda walidująca, czy wszystkie pola wejściowe są wypełnione
         if (idField.getText().trim().isEmpty()) return "Student ID";
         if (nameField.getText().trim().isEmpty()) return "Name";
         if (ageField.getText().trim().isEmpty()) return "Age";
         if (gradeField.getText().trim().isEmpty()) return "Grade";
-        return null; // All fields are valid
+        return null; // Wszystkie pola są prawidłowe
     }
 
     private void addStudent() {
+        // Walidacja wypełnienia pól
         String missingField = validateFields();
         if (missingField != null) {
             outputArea.setText("Error: The '" + missingField + "' field must be filled.");
+            clearInputFields(); // Czyszczenie pól
             return;
         }
     
         try {
-            String id = idField.getText();
-            String name = nameField.getText();
-            int age = Integer.parseInt(ageField.getText());
-            double grade = Double.parseDouble(gradeField.getText());
+            String id = idField.getText().trim();
+            String name = nameField.getText().trim();
+            int age = Integer.parseInt(ageField.getText().trim()); // Parsowanie wieku
+            double grade = Double.parseDouble(gradeField.getText().trim()); // Parsowanie oceny
+    
+            // Walidacja zakresu oceny
+            if (grade < 0.0 || grade > 100.0) {
+                outputArea.setText("Error: Grade must be a number between 0.0 and 100.0.");
+                clearInputFields(); // Czyszczenie pól
+                return;
+            }
+    
+            // Dodanie studenta do bazy
             manager.addStudent(new Student(name, age, grade, id));
             outputArea.setText("Student added successfully!");
         } catch (NumberFormatException e) {
             outputArea.setText("Error: Age must be an integer and Grade must be a number.");
         } catch (Exception e) {
             outputArea.setText("Error adding student: " + e.getMessage());
+        } finally {
+            clearInputFields(); // Czyszczenie pól po każdej akcji
         }
     }
 
     private void removeStudent() {
+        // Metoda obsługująca usuwanie studenta
         String studentId = idField.getText().trim();
-        
-        // Walidacja: ID musi być wypełnione
         if (studentId.isEmpty()) {
             outputArea.setText("Error: The 'Student ID' field must be filled to remove a student.");
             return;
         }
         
         try {
-            // Sprawdzenie, czy student istnieje
-            if (!manager.studentExists(studentId)) { // Zakładamy, że `studentExists` jest metodą w managerze
-                outputArea.setText("Error: No student found with ID '" + studentId + "'.");
+            if (!manager.studentExists(studentId)) {
+                outputArea.setText("Error: No student exists with ID '" + studentId + "'. Use 'Display All Students' to view valid IDs.");
                 return;
             }
-            
-            // Usuwanie studenta
-            manager.removeStudent(studentId);
+            manager.removeStudent(studentId); // Usunięcie studenta
             outputArea.setText("Student with ID '" + studentId + "' removed successfully!");
         } catch (Exception e) {
             outputArea.setText("Error removing student: " + e.getMessage());
         }
     }
+
     private void displayAllStudents() {
+        // Metoda obsługująca wyświetlanie wszystkich studentów
         ArrayList<Student> students = manager.displayAllStudents();
         StringBuilder sb = new StringBuilder();
         for (Student student : students) {
@@ -358,11 +233,58 @@ public class StudentManagementGUI {
     }
 
     private void calculateAverageGrade() {
+        // Metoda obsługująca obliczanie średniej ocen
         double average = manager.calculateAverageGrade();
         outputArea.setText("Average Grade: " + average);
     }
 
-    public static void main(String[] args) {
-        new StudentManagementGUI();
+    private void clearInputFields() {
+        idField.setText(""); // Czyszczenie pola ID
+        nameField.setText(""); // Czyszczenie pola imienia
+        ageField.setText(""); // Czyszczenie pola wieku
+        gradeField.setText(""); // Czyszczenie pola oceny
+    }
+
+    private void updateStudent() {
+        // Pobierz ID studenta
+        String studentId = idField.getText().trim();
+        if (studentId.isEmpty()) {
+            outputArea.setText("Error: The 'Student ID' field must be filled to update a student.");
+            return;
+        }
+    
+        try {
+            // Sprawdź, czy student istnieje
+            if (!manager.studentExists(studentId)) {
+                outputArea.setText("Error: No student exists with ID '" + studentId + "'. Use 'Display All Students' to view valid IDs.");
+                return;
+            }
+    
+            // Walidacja pól formularza
+            String missingField = validateFields();
+            if (missingField != null) {
+                outputArea.setText("Error: The '" + missingField + "' field must be filled.");
+                return;
+            }
+    
+            // Pobierz nowe dane
+            String newName = nameField.getText();
+            int newAge = Integer.parseInt(ageField.getText()); // Parsowanie wieku
+            double newGrade = Double.parseDouble(gradeField.getText()); // Parsowanie oceny
+    
+            // Zaktualizuj studenta
+            manager.updateStudent(new Student(newName, newAge, newGrade, studentId));
+    
+            // Wyświetl komunikat sukcesu
+            outputArea.setText("Student with ID '" + studentId + "' updated successfully!\n" +
+                "New Data: " + studentId + ", " + newName + ", " + newAge + ", " + newGrade);
+    
+            // Opcjonalne: Odśwież listę studentów po aktualizacji
+            displayAllStudents();
+        } catch (NumberFormatException e) {
+            outputArea.setText("Error: Age must be an integer and Grade must be a number.");
+        } catch (Exception e) {
+            outputArea.setText("Error updating student: " + e.getMessage());
+        }
     }
 }

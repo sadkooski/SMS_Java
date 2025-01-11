@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 import model.Student;
 
-// Implementation of StudentManager
 public class StudentManagerImpl implements StudentManager {
     private final String DATABASE_URL = "jdbc:sqlite:students.db";
 
@@ -35,16 +34,20 @@ public class StudentManagerImpl implements StudentManager {
 
     @Override
     public void addStudent(Student student) {
+        if (!student.getStudentID().matches("\\d+")) {
+            throw new IllegalArgumentException("Student ID must be a number.");
+        }
+    
         String insertSQL = "INSERT INTO students (studentID, name, age, grade) VALUES (?, ?, ?, ?);";
         try (Connection conn = DriverManager.getConnection(DATABASE_URL);
-                PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
+            PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
             pstmt.setString(1, student.getStudentID());
             pstmt.setString(2, student.getName());
             pstmt.setInt(3, student.getAge());
             pstmt.setDouble(4, student.getGrade());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error adding student to database: " + e.getMessage());
         }
     }
 
@@ -61,10 +64,19 @@ public class StudentManagerImpl implements StudentManager {
     }
 
     @Override
-    public void updateStudent(String studentID) {
-        // Implementation for updating a student record could involve additional parameters.
-        // Placeholder implementation for now.
-        System.out.println("Update student functionality not implemented yet.");
+    public void updateStudent(Student student) {
+        String updateSQL = "UPDATE students SET name = ?, age = ?, grade = ? WHERE studentID = ?;";
+    
+        try (Connection conn = DriverManager.getConnection(DATABASE_URL);
+            PreparedStatement pstmt = conn.prepareStatement(updateSQL)) {
+            pstmt.setString(1, student.getName());
+            pstmt.setInt(2, student.getAge());
+            pstmt.setDouble(3, student.getGrade());
+            pstmt.setString(4, student.getStudentID());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error updating student: " + e.getMessage());
+        }
     }
 
     @Override
@@ -109,11 +121,11 @@ public class StudentManagerImpl implements StudentManager {
             pstmt.setString(1, studentID);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                return rs.getInt("count") > 0; // Jeśli liczba jest większa od 0, student istnieje
+                return rs.getInt("count") > 0;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false; // W razie problemów zakładamy, że student nie istnieje
+        return false;
     }
 }
